@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: kayo-defense-engine
+    runtime: python
+    plan: free
+    region: oregon
+    buildCommand: "./build.sh"
+    startCommand: "uvicorn backend.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.8
+      - key: NODE_VERSION
+        value: 20.11.0

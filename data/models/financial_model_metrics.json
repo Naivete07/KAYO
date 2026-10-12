@@ -1,0 +1,39 @@
+{
+  "model": "RandomForest-FinancialScamDetector",
+  "training_samples": 25276,
+  "test_samples": 6320,
+  "roc_auc": 0.9996,
+  "f1_score": 0.9984,
+  "precision": 1.0,
+  "recall": 0.9969,
+  "feature_importances": {
+    "orig_balance_err": 0.3226,
+    "orig_drained": 0.1802,
+    "oldbalanceOrg": 0.1068,
+    "newbalanceOrig": 0.099,
+    "amount": 0.0781,
+    "type_PAYMENT": 0.0481,
+    "type_TRANSFER": 0.0407,
+    "dest_balance_err": 0.0352,
+    "oldbalanceDest": 0.025,
+    "type_CASH_OUT": 0.0193,
+    "high_value": 0.0178,
+    "newbalanceDest": 0.0176,
+    "dest_had_zero": 0.0095
+  },
+  "features": [
+    "amount",
+    "oldbalanceOrg",
+    "newbalanceOrig",
+    "oldbalanceDest",
+    "newbalanceDest",
+    "type_TRANSFER",
+    "type_CASH_OUT",
+    "type_PAYMENT",
+    "orig_balance_err",
+    "dest_balance_err",
+    "orig_drained",
+    "dest_had_zero",
+    "high_value"
+  ]
+}

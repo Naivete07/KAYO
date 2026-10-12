@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-primary: #040711;
+    --bg-secondary: #080d1a;
+    --bg-surface: rgba(10, 15, 29, 0.82);
+    --border-subtle: rgba(255, 255, 255, 0.07);
+    --accent-theme: #eab308;
+    --accent-glow: rgba(234, 179, 8, 0.25);
+  }
+
+  body {
+    background-color: #040711;
+    color: #e2e8f0;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    background-image: 
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(234, 179, 8, 0.04), transparent),
+      linear-gradient(180deg, #050813 0%, #03050a 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+}
+
+/* Theme variables and background gradients */
+[data-theme="gold"] {
+  --accent-theme: #eab308;
+  --accent-glow: rgba(234, 179, 8, 0.25);
+}
+[data-theme="gold"] body {
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(234, 179, 8, 0.05), transparent),
+    linear-gradient(180deg, #050813 0%, #03050a 100%);
+}
+
+[data-theme="sapphire"] {
+  --accent-theme: #38bdf8;
+  --accent-glow: rgba(56, 189, 248, 0.25);
+}
+[data-theme="sapphire"] body {
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(56, 189, 248, 0.05), transparent),
+    linear-gradient(180deg, #030714 0%, #020409 100%);
+}
+
+[data-theme="emerald"] {
+  --accent-theme: #10b981;
+  --accent-glow: rgba(16, 185, 129, 0.25);
+}
+[data-theme="emerald"] body {
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16, 185, 129, 0.05), transparent),
+    linear-gradient(180deg, #020a08 0%, #010403 100%);
+}
+
+[data-theme="platinum"] {
+  --accent-theme: #e2e8f0;
+  --accent-glow: rgba(226, 232, 240, 0.2);
+}
+[data-theme="platinum"] body {
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255, 255, 255, 0.03), transparent),
+    linear-gradient(180deg, #08090d 0%, #020305 100%);
+}
+
+/* High-Precision Institutional Card Styling */
+.sovereign-panel {
+  background: rgba(8, 12, 24, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 
+    0 4px 24px -1px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.sovereign-panel-glow {
+  background: rgba(9, 14, 28, 0.92);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px -2px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(4, 7, 17, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Radar pulse animation */
+@keyframes radar-pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 8px rgba(244, 63, 94, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(244, 63, 94, 0);
+  }
+}
+
+.animate-radar {
+  animation: radar-pulse 2.2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
