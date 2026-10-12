@@ -99,6 +99,33 @@ Inside the **Attack Lab** tab of the dashboard, you can trigger live test attack
 
 ---
 
+## 🚀 Deployment to Render & GitHub Upload
+
+The repository is pre-configured with a `.gitignore` guaranteeing the entire repository is **under 2MB** (far below GitHub's 100MB limit).
+
+### Step 1: Upload to GitHub
+```bash
+git remote add origin https://github.com/<your-username>/<your-repo-name>.git
+git branch -M main
+git push -u origin main
+```
+
+### Step 2: Deploy to Render (1-Click or Manual)
+The project includes a ready-to-use `render.yaml`, `Procfile`, and `build.sh`.
+
+**Option A: 1-Click Blueprint (Recommended)**
+1. Log in to [Render.com](https://render.com).
+2. Click **New +** ➔ **Blueprint**.
+3. Connect your GitHub repository.
+4. Render automatically reads `render.yaml` and deploys both backend and frontend on a single unified URL!
+
+**Option B: Manual Web Service Setup**
+- **Environment:** `Python 3`
+- **Build Command:** `./build.sh` (or `pip install -r requirements.txt && npm --prefix frontend install && npm --prefix frontend run build`)
+- **Start Command:** `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`
+
+---
+
 ## 📜 Full Project Documentation
 
 For the formal hackathon submission report, see [PROJECT_REPORT.md](./PROJECT_REPORT.md).
