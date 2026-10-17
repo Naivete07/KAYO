@@ -17,7 +17,7 @@ export const ThemeConfigBar: React.FC<ThemeConfigBarProps> = ({
 }) => {
   const currentTheme = THEMES[theme] || THEMES.gold;
 
-  const themeOptions: SovereignTheme[] = ['gold', 'sapphire', 'emerald', 'platinum'];
+  const themeOptions: SovereignTheme[] = ['pitch_black', 'gold', 'sapphire', 'emerald', 'platinum'];
 
   return (
     <div className="bg-[#070b16]/90 border border-slate-800/90 rounded-2xl p-3.5 px-5 mb-5 shadow-xl backdrop-blur-xl flex flex-wrap items-center justify-between gap-4">

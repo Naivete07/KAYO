@@ -2,14 +2,13 @@ import { useState, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { MetricCards } from './components/MetricCards';
-import { ThemeConfigBar } from './components/ThemeConfigBar';
+import { SettingsAccountView } from './components/SettingsAccountView';
 import type { SovereignTheme, DisplayDensity } from './types/theme';
 import { ThreatGraphVisualizer } from './components/ThreatGraphVisualizer';
 import { IncidentDetailPanel } from './components/IncidentDetailPanel';
 import { LiveTelemetryStream } from './components/LiveTelemetryStream';
 import { SimulationLab } from './components/SimulationLab';
 import { AuditLogView } from './components/AuditLogView';
-import { AnalyticsView } from './components/AnalyticsView';
 import { ActionModal } from './components/ActionModal';
 import type { ThreatIncident, GraphData, StatsOverview, ActionAuditLog, EBPFEvent, TransactionEvent } from './types';
 
@@ -26,12 +25,15 @@ export function App() {
 
   // Theme & Density State
   const [theme, setTheme] = useState<SovereignTheme>(() => {
-    return (localStorage.getItem('kayo_theme') as SovereignTheme) || 'gold';
+    const saved = localStorage.getItem('kayo_theme') as SovereignTheme;
+    if (saved && saved !== 'gold') {
+      return saved;
+    }
+    return 'pitch_black';
   });
   const [density, setDensity] = useState<DisplayDensity>(() => {
     return (localStorage.getItem('kayo_density') as DisplayDensity) || 'executive';
   });
-  const [showConfigBar, setShowConfigBar] = useState<boolean>(true);
 
   // Sync theme changes to localStorage and HTML attribute
   useEffect(() => {
@@ -165,28 +167,22 @@ export function App() {
 
       {/* Main App Container */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Top Header with Context & Theme Quick Selector (Single Nav kept in sidebar) */}
+        {/* Top Header with Context Navigation & Direct Account Access */}
         <Header
           activeTab={activeTab}
+          setActiveTab={setActiveTab}
           theme={theme}
-          setTheme={setTheme}
-          showConfigBar={showConfigBar}
-          setShowConfigBar={setShowConfigBar}
         />
 
         {/* Main Content Area */}
-        <main className={`flex-1 w-full mx-auto p-4 sm:p-6 ${density === 'compact' ? 'max-w-full' : 'max-w-7xl'}`}>
-          {/* Institutional Telemetry & 5 KPI Cards */}
-          <MetricCards stats={stats} theme={theme} />
-
-          {/* Haute SOC Console Configuration & Theme Switcher Bar */}
-          {showConfigBar && (
-            <ThemeConfigBar
-              theme={theme}
-              setTheme={setTheme}
-              density={density}
-              setDensity={setDensity}
-            />
+        <main className={`flex-1 w-full mx-auto ${
+          activeTab === 'graph' 
+            ? 'p-2.5 sm:p-3.5 max-w-full' 
+            : density === 'compact' ? 'max-w-full p-4' : 'max-w-7xl p-4 sm:p-6'
+        }`}>
+          {/* Institutional Telemetry & 5 KPI Cards (shown on Incident Review and Scam Simulator) */}
+          {(activeTab === 'incidents' || activeTab === 'simulator') && (
+            <MetricCards stats={stats} theme={theme} />
           )}
 
           {/* Active Tab Body */}
@@ -209,6 +205,16 @@ export function App() {
                   graphData={selectedIncident.graph_snapshot || graphData}
                   selectedIncidentTitle={selectedIncident.title}
                   onRefresh={fetchData}
+                  theme={theme}
+                  incidents={incidents}
+                  selectedIncident={selectedIncident}
+                  onSelectIncident={(inc) => {
+                    setSelectedIncident(inc);
+                    if (inc.graph_snapshot) {
+                      setGraphData(inc.graph_snapshot);
+                    }
+                  }}
+                  onOpenActionModal={handleOpenActionModal}
                 />
               )}
             </div>
@@ -216,8 +222,19 @@ export function App() {
 
           {activeTab === 'graph' && (
             <ThreatGraphVisualizer
-              graphData={graphData}
+              graphData={selectedIncident?.graph_snapshot || graphData}
+              selectedIncidentTitle={selectedIncident?.title}
               onRefresh={fetchData}
+              theme={theme}
+              incidents={incidents}
+              selectedIncident={selectedIncident}
+              onSelectIncident={(inc) => {
+                setSelectedIncident(inc);
+                if (inc.graph_snapshot) {
+                  setGraphData(inc.graph_snapshot);
+                }
+              }}
+              onOpenActionModal={handleOpenActionModal}
             />
           )}
 
@@ -238,8 +255,14 @@ export function App() {
             <AuditLogView logs={auditLogs} />
           )}
 
-          {activeTab === 'analytics' && (
-            <AnalyticsView stats={stats} />
+          {activeTab === 'settings' && (
+            <SettingsAccountView
+              theme={theme}
+              setTheme={setTheme}
+              density={density}
+              setDensity={setDensity}
+              stats={stats}
+            />
           )}
         </main>
 

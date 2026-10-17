@@ -5,9 +5,9 @@ import {
   Radio, 
   Gamepad2, 
   FileText, 
-  BarChart3, 
   ShieldCheck, 
-  Sparkles
+  Sparkles,
+  Settings
 } from 'lucide-react';
 import { THEMES, type SovereignTheme } from '../types/theme';
 
@@ -73,19 +73,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
       ]
     },
     {
-      heading: 'REPORTS & BENCHMARKS',
+      heading: 'GOVERNANCE & AUDIT',
       items: [
         { 
           id: 'audit', 
           label: 'Audit History', 
           sub: 'Verified defense actions', 
           icon: FileText 
-        },
+        }
+      ]
+    },
+    {
+      heading: 'SYSTEM & SETTINGS',
+      items: [
         { 
-          id: 'analytics', 
-          label: 'Model Accuracy', 
-          sub: 'Detection speed & ML stats', 
-          icon: BarChart3 
+          id: 'settings', 
+          label: 'Settings & Account', 
+          sub: 'Themes, ML models & rules', 
+          icon: Settings 
         }
       ]
     }

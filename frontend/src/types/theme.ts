@@ -1,4 +1,4 @@
-export type SovereignTheme = 'gold' | 'sapphire' | 'emerald' | 'platinum';
+export type SovereignTheme = 'pitch_black' | 'gold' | 'sapphire' | 'emerald' | 'platinum';
 export type DisplayDensity = 'compact' | 'executive' | 'presentation';
 
 export interface ThemeColors {
@@ -22,6 +22,24 @@ export interface ThemeColors {
 }
 
 export const THEMES: Record<SovereignTheme, ThemeColors> = {
+  pitch_black: {
+    id: 'pitch_black',
+    name: 'Pitch Black',
+    dotColor: 'bg-white',
+    accentText: 'text-white',
+    accentBg: 'bg-white',
+    accentBgHover: 'hover:bg-zinc-200',
+    accentBgSubtle: 'bg-white/10',
+    accentBorder: 'border-white/20',
+    accentBorderGlow: 'border-white/40 shadow-white/10',
+    accentRing: 'ring-white',
+    activePillBg: 'bg-white text-black font-bold shadow-lg shadow-white/20',
+    activePillText: 'text-white',
+    sparklineStroke: '#ffffff',
+    badgeBg: 'bg-zinc-900 text-white border-zinc-700',
+    glowHex: '#ffffff',
+    cardHover: 'hover:border-zinc-500'
+  },
   gold: {
     id: 'gold',
     name: 'Sovereign Gold',
