@@ -18,8 +18,6 @@ lerna-debug.log*
 # (Render builds frontend at deploy time; dist is excluded from git)
 dist/
 dist-ssr/
-frontend/dist/
-frontend/dist-ssr/
 .vite/
 frontend/.vite/
 

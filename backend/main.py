@@ -180,30 +180,31 @@ async def websocket_telemetry_stream(websocket: WebSocket):
 
 # Production static files serving for Render / single-service deployment
 frontend_dist = Path(__file__).resolve().parent.parent / "frontend" / "dist"
-if frontend_dist.exists():
+
+if frontend_dist.exists() and (frontend_dist / "assets").exists():
     app.mount("/assets", StaticFiles(directory=str(frontend_dist / "assets")), name="assets")
 
-    @app.get("/", include_in_schema=False)
-    async def serve_spa_root():
-        index_file = frontend_dist / "index.html"
-        if index_file.exists():
-            return FileResponse(index_file)
-        raise HTTPException(status_code=404, detail="Frontend index.html not found")
+@app.get("/", include_in_schema=False)
+async def serve_spa_root():
+    index_file = frontend_dist / "index.html"
+    if index_file.exists():
+        return FileResponse(index_file)
+    raise HTTPException(status_code=503, detail="Frontend build not available")
 
-    @app.get("/{full_path:path}")
-    async def serve_spa_frontend(full_path: str):
-        # Do not intercept API, Docs or WebSocket routes
-        if full_path.startswith("api") or full_path.startswith("docs") or full_path.startswith("openapi.json"):
-            raise HTTPException(status_code=404, detail="API route not found")
-        
-        target_file = frontend_dist / full_path
-        if full_path and target_file.exists() and target_file.is_file():
-            return FileResponse(target_file)
-        
-        index_file = frontend_dist / "index.html"
-        if index_file.exists():
-            return FileResponse(index_file)
-        raise HTTPException(status_code=404, detail="Frontend index.html not found")
+@app.get("/{full_path:path}")
+async def serve_spa_frontend(full_path: str):
+    # Do not intercept API, Docs or WebSocket routes
+    if full_path.startswith("api") or full_path.startswith("docs") or full_path.startswith("openapi.json"):
+        raise HTTPException(status_code=404, detail="API route not found")
+    
+    target_file = frontend_dist / full_path
+    if full_path and target_file.exists() and target_file.is_file():
+        return FileResponse(target_file)
+    
+    index_file = frontend_dist / "index.html"
+    if index_file.exists():
+        return FileResponse(index_file)
+    raise HTTPException(status_code=503, detail="Frontend build not available")
 
 if __name__ == "__main__":
     import uvicorn
