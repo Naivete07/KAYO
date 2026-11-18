@@ -1,6 +1,5 @@
 # KAYO — AI-Driven Scam Pattern Recognition & Cross-Domain Threat Correlation
 
-> **Event:** CodeSlayer 2k26 – DevSphereIndia  
 > **Track:** Open Innovation  
 > **Team Name:** Tasteless Balls  
 > **Team Members:**  
