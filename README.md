@@ -101,6 +101,8 @@ Inside the **Attack Lab** tab of the dashboard, you can trigger live test attack
 
 ## 🚀 Deployment to Render & GitHub Upload
 
+The live KAYO deployment is available at: [https://kayo-e1mt.onrender.com/](https://kayo-e1mt.onrender.com/)
+
 The repository is pre-configured with a `.gitignore` guaranteeing the entire repository is **under 2MB** (far below GitHub's 100MB limit).
 
 ### Step 1: Upload to GitHub

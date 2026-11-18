@@ -183,6 +183,13 @@ frontend_dist = Path(__file__).resolve().parent.parent / "frontend" / "dist"
 if frontend_dist.exists():
     app.mount("/assets", StaticFiles(directory=str(frontend_dist / "assets")), name="assets")
 
+    @app.get("/", include_in_schema=False)
+    async def serve_spa_root():
+        index_file = frontend_dist / "index.html"
+        if index_file.exists():
+            return FileResponse(index_file)
+        raise HTTPException(status_code=404, detail="Frontend index.html not found")
+
     @app.get("/{full_path:path}")
     async def serve_spa_frontend(full_path: str):
         # Do not intercept API, Docs or WebSocket routes
